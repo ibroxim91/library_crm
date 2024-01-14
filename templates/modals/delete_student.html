@@ -1,0 +1,42 @@
+<div class="delete_student">
+    <div class="modal_body">
+        Talabani o'chirishni xoxlaysizmi ?
+    </div>
+
+    <div class="d-flex">
+        <button class="btn btn-success toogle_delete" >Yo'q</button>
+        <a href="/student/1/delete" id="delete_url" class="btn btn-danger">Xa</a>
+    </div>
+</div>
+
+<style>
+    .delete_student{
+        position: fixed;
+        width: 400px;
+        padding: 30px;
+        background: white;
+        top: -100px;
+        left: 50%;
+        transform: translateX(-50%);
+        box-shadow: 0px 0px 5px black;
+        transition: 0.7s;
+    }
+    .delete_student_show{
+    top: 100px;
+
+}
+</style>
+
+<script>
+    document.querySelectorAll('.toogle_delete').forEach((el ,index) =>{
+        
+        el.addEventListener('click', function(){
+            document.querySelector('.delete_student').classList.toggle('delete_student_show');
+            let student_id = el.getAttribute('data-id')
+            delete_url.href = `/student/${student_id}/delete`    
+            }
+        )
+    });
+    
+    </script>
+   

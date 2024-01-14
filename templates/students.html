@@ -1,0 +1,81 @@
+{% extends 'wrapper.html' %}
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">
+                Talabalar
+            </h1>
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-home"></i>  <a href="/"> Bosh sahifa </a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-users"></i> Talabalar
+                </li>
+                <li class="active">
+                    <button class="add_student btn btn-success">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </li>
+            </ol>
+        </div>
+    </div>
+    <!-- /.row -->
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h2> Talabalar ro'yxati </h2>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover text-center">
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Ism va familiya</th>
+                            <th>Telefon raqam</th>
+                            <th>Talaba rasmi</th>
+                            <th>Boshqaruv</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for s in students %}
+
+                        <tr>
+                            <td> {{ forloop.counter }} </td>
+                            <td> {{ s.full_name }} </td>
+                            <td> {{ s.phone }}</td>
+                            <td>
+                                <img src=" {{ s.image.url}}" width="100px" alt="">
+                            </td>
+                            <td>
+                               <p>
+                        <a href="#" class="edit_student add_student" 
+                        data-id="{{ s.id }}"
+                        data-firstname="{{ s.first_name }}" 
+                        data-lastname="{{ s.last_name }}"
+                        data-phone="{{ s.phone }}"
+                        >
+                            <i class=" text-success fa-2x fa fa-edit"></i>
+                    </a>
+                        <a href="#" class="toogle_delete" 
+                        data-id="{{ s.id }}" 
+                        ><i class="text-danger fa-2x fa fa-trash"></i></a>
+                               </p>
+                            </td>
+                        </tr>
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'modals/add_student.html' %}
+{% include 'modals/delete_student.html' %}
+
+{% endblock content %}

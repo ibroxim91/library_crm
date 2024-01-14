@@ -1,0 +1,86 @@
+<div class="modal-bodys ">
+    <div class="modale">
+        <h1> <span id="form_title"> Kitob qo'shish </span>
+            <button class="close add_book" type="button">
+                <i class="fa-2x fa fa-times"></i>
+            </button>
+        </h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="formGroupExampleInput"> Kitob nomi </label>
+              <input type="text" id="book_name" class="form-control" name="name" placeholder="Kitob nomini kiritng">
+            </div>
+
+            <div class="form-group">
+              <label for="formGroupExampleInput2"> Kitob muallifi </label>
+              <input type="text" id="book_author" class="form-control" name="author" placeholder="Kitob muallifini kiritng">
+            </div>
+
+              <input type="hidden" id="book_id" name="book_id">
+
+              <div class="form-group">
+                <label for="formGroupExampleInput2"> Kitob rasmi </label>
+                <input type="file" id="photo" class="form-control" name="image">
+              </div>
+
+              <div class="form-group">
+                <button class="btn btn-success"> Qo'shish </button>
+              </div>
+
+
+          </form>
+          
+    </div>
+</div>
+
+<style>
+    .modal-bodys{
+        position: fixed;
+        right: 0;
+        /* z-index: 9999; */
+        top: 0;
+        width: 25%;
+        height: 100vh;
+        /* padding-top: 30px; */
+        padding: 50px 20px 20px 20px;
+        background: white;
+        box-shadow: 0px 0px 5px black;
+
+        transform: translateX(100%);
+        
+        transition: 0.7s;
+    }
+        
+    .show-modal{
+        transform: translateX(0%);
+
+    }
+
+</style>
+
+<script>
+    document.querySelectorAll('.add_book').forEach((el ,index) =>{
+
+        el.addEventListener('click', function(){
+            document.querySelector('.modal-bodys').classList.toggle('show-modal');
+                book_name.value = ''
+                book_author.value =''
+                book_id.value = ''
+                form_title.textContent = "Kitob qo'shish"
+                photo.required = true
+            }
+        )
+    });
+
+    document.querySelectorAll('.edit_book').forEach((el ,index) =>{
+
+            el.addEventListener('click', function(){
+                book_name.value = el.getAttribute('data-name')
+                book_author.value = el.getAttribute('data-author')
+                book_id.value = el.getAttribute('data-id')
+                form_title.textContent = "Kitobni taxrirlash"
+                photo.required = false
+        })
+});
+</script>

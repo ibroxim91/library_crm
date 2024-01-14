@@ -1,0 +1,81 @@
+{% extends 'wrapper.html' %}
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">
+                Mualliflar
+            </h1>
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-home"></i>  <a href="/"> Bosh sahifa </a>
+                </li>
+                <li class="active">
+                    <i class="fa fa-users"></i> Mualliflar
+                </li>
+                <li class="active">
+                    <button class="add_author btn btn-success">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </li>
+            </ol>
+        </div>
+    </div>
+    <!-- /.row -->
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h2> Mualliflar ro'yxati </h2>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover text-center">
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Muallif ismi</th>
+                            <th>Muallif haqida ma'lumot</th>
+                            <th>Muallifning rasmi</th>
+                            <th>Boshqaruv</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for a in authors %}
+
+                        <tr>
+                            <td> {{ forloop.counter }} </td>
+                            <td> {{ a.full_name }} </td>
+                            <td> {{ a.info }}</td>
+                            <td>
+                                <img src=" {{ a.image.url}}" width="100px" alt="">
+                            </td>
+                            <td>
+                               <p>
+                        <a href="#" class="edit_author add_author" 
+                        data-id="{{ a.id }}"
+                        data-firstname="{{ a.first_name }}" 
+                        data-lastname="{{ a.last_name }}" 
+                        data-info="{{ a.info }}"
+                        >
+                            <i class=" text-success fa-2x fa fa-edit"></i>
+                    </a>
+                        <a href="#" class="toogle_delete" 
+                        data-id="{{ a.id }}" 
+                        ><i class="text-danger fa-2x fa fa-trash"></i></a>
+                               </p>
+                            </td>
+                        </tr>
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'modals/add_author.html' %}
+{% include 'modals/delete_author.html' %}
+
+{% endblock %}
