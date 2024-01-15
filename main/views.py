@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import View
-from .models import Student, Book, Author
+from .models import Student, Book, Author,BookRecevier
 from django.http import JsonResponse
 from django.db.models import Q
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializer import StudentSerializers, BookSerializers
+import datetime
 
 # Create your views here.
 
@@ -107,4 +108,19 @@ class AuthorView(View):
         context = {'authors':authors}
         return render(request, 'authors.html', context=context)
 
+
+class BookReciverView(View):
+    def post(self, request):
+        book_id = request.POST.get('book_id', None)
+        student_id = request.POST.get('student_id', None)
+        date = request.POST.get('date', None)
+        redirect_url = request.POST.get('redirect_url', '/')
+  
+        book = get_object_or_404(Book , pk=int(book_id))
+        student = get_object_or_404(Student , pk=int(student_id))
+        end_date = datetime.datetime.strptime(date, '%Y-%m-%d').date()
+        bc = BookRecevier.objects.get_or_create(student=student)[0]
+ 
+        bc.books.create(book=book,end_date=end_date)
+        return redirect(redirect_url)
      

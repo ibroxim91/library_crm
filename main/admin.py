@@ -5,6 +5,7 @@ from django.utils.html import format_html
 # Register your models here.
 
 admin.site.register(Employee)
+admin.site.register(BookRecevier)
 
 @admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):

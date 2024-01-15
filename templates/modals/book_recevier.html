@@ -5,8 +5,10 @@
                 <i class="fa-2x fa fa-times"></i>
             </button>
         </h1>
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
+        <form method="post" action="/book_reciver" enctype="multipart/form-data">
+            {% csrf_token %}    
+
+            <input type="hidden" name="redirect_url" id="redirect_url">
            
             <div class="form-group">
               <label for=""> Talaba ID (yoki ism familiya) </label>
@@ -17,9 +19,7 @@
               class="form-control" required name="first_name" placeholder="Ism">
                 
               <div id="students" class="text-center">
-               <select name="" class="form-control" id="" multiple>
-                    
-               </select>
+               
             </div>
         </div>
 
@@ -36,9 +36,11 @@
 
             <div class="form-group">
                 <label for=""> Topshirish sanasi </label>
-                <input type="date" id="phone" class="form-control" required name="phone" placeholder="Telefon raqam">
+                <input type="date" 
+                id="date1"
+                 class="form-control" required name="date" >
             </div>
-              <input type="hidden"  id="student_id" name="student_id">
+        
 
               <div class="form-group">
                 <button class="btn btn-success"> Qo'shish </button>
@@ -73,6 +75,15 @@
 
 <script>
 
+    document.getElementById('redirect_url').value = window.location
+
+var currentDate = new Date();
+currentDate.setDate(currentDate.getDate() + 1);
+
+var formattedDate = currentDate.toISOString().slice(0, 10);
+document.getElementById("date1").min = formattedDate;
+
+
 function StudentSearch(val){
         let url = '/search_students?q=${val}'
         fetch(url).then((response) => {
@@ -88,11 +99,7 @@ function StudentSearch(val){
         el.addEventListener('click', function(){
           
             document.querySelector('.modal-bodies').classList.toggle('show-modal');
-            first_name.value = ''
-                last_name.value =''
-                phone.value =''
-                student_id.value = ''
-                photo.required = true
+           
             }
         )
     });
@@ -103,17 +110,7 @@ function StudentSearch(val){
         })
     
 
-    document.querySelectorAll('.edit_student').forEach((el ,index) =>{
 
-            el.addEventListener('click', function(){
-                first_name.value = el.getAttribute('data-firstname')
-                last_name.value = el.getAttribute('data-lastname')
-                phone.value = el.getAttribute('data-phone')
-                student_id.value = el.getAttribute('data-id')
-                form_title.textContent = "Talabani taxrirlash"
-                photo.required = false
-        })
-});
 
 
 function StudentSearch(val){
@@ -123,7 +120,7 @@ function StudentSearch(val){
             return response.json();
          }).then((data) => {
                 if(data.students.length > 0){
-                   let  div = `<select name="student_id" class="form-control" id="" multiple>`
+                   let  div = `<select name="student_id" required class="form-control" id="" multiple>`
 
                     for(let i = 0; i < data.students.length; i++){
                        div += `  <option value="${data.students[i].id}">${data.students[i].first_name}  ${data.students[i].last_name}</option> ` 
@@ -152,7 +149,7 @@ function StudentSearch(val){
             
             console.log(data)
                 if(data.books.length > 0){
-                   let  div = `<select name="student_id" class="form-control" id="" multiple>`
+                   let  div = `<select name="book_id" required class="form-control" id="" multiple>`
 
                     for(let i = 0; i < data.books.length; i++){
                        div += `  <option value="${data.books[i].id}"> ${data.books[i].name}   ${data.books[i].author}</option> ` 
